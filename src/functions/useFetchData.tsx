@@ -28,7 +28,7 @@ export default function useFetchData() : OpenMeteoResponse | undefined | null {
         
         fetchData();
 
-    }, []); 
+    },[]); 
 
     return data;
 }
