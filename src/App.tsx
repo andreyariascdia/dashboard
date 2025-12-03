@@ -13,16 +13,11 @@ function App() {
   //const [count, setCount] = useState(0)
   const dataFetcherOutput = useFetchData();
   return (
-
     <Grid container spacing={5} justifyContent="center" alignItems="center">
-      <div>
-        <h1>Bienvenido al Dashboard</h1>
-      </div>
       {/* Encabezado */}
       <Grid size={12}>
         <HeaderUI />
       </Grid>
-
       {/* Alertas */}
       <Grid size={12} ><AlertUI description="No se preveen lluvias" /></Grid>
 
