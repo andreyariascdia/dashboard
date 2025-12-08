@@ -1,7 +1,11 @@
 import { useEffect, useState } from 'react';
 import { type OpenMeteoResponse } from '../types/DashboardTypes';
-
-export default function useFetchData(url: string) { 
+export interface dataFetch {
+    data: OpenMeteoResponse | null;
+    loading: boolean;
+    error: string | null;
+}
+export default function useFetchData(url: string): dataFetch { 
     
     const [data, setData] = useState<OpenMeteoResponse | null>(null);
     const [loading, setLoading] = useState<boolean>(true);

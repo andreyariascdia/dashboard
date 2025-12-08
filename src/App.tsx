@@ -6,9 +6,11 @@ import SelectorUI from './components/selectorUI';
 import IndicatorUI from './components/IndicatorUI';
 import useFetchData from './functions/useFetchData';
 import './App.css'
+import TableUI from './components/TableUI';
+import ChartUI from './components/ChartUI';
 
 function App() {
-  const API_URL = 'https://api.open-meteo.com/v1/forecast?latitude=-2.1962&longitude=-79.8862&current=temperature_2m,relative_humidity_2m,apparent_temperature,wind_speed_10m&timezone=auto';
+  const API_URL = 'https://api.open-meteo.com/v1/forecast?latitude=-2.1962&longitude=-79.8862&hourly=temperature_2m,wind_speed_10m&current=temperature_2m,relative_humidity_2m,apparent_temperature,wind_speed_10m&timezone=auto';
 
   const { data, loading, error } = useFetchData(API_URL);
 
@@ -32,7 +34,7 @@ function App() {
 
         {/* Indicador 1: Temperatura */}
         <Grid size={{ xs: 12, md: 3 }}>
-          ¡
+          
           <IndicatorUI
             title='Temperatura'
             description={
@@ -81,10 +83,10 @@ function App() {
 
       </Grid>
       {/* Gráfico */}
-      <Grid size={{ xs: 12, md: 6 }} sx={{ display: { xs: "none", md: "block" } }}>Elemento: Gráfico</Grid>
+      <Grid size={{ xs: 12, md: 6 }} sx={{ display: { xs: "none", md: "block" } }}><ChartUI data={data} loading={loading} error={error} /></Grid>
      
       {/* Tabla */}
-      <Grid size={{ xs: 12, md: 6 }} sx={{ display: { xs: "none", md: "block" } }}>Elemento: Tabla</Grid>
+      <Grid size={{ xs: 12, md: 6 }} sx={{ display: { xs: "none", md: "block" } }}><TableUI /></Grid>
       
       {/* Información adicional */}
       <Grid size={{ xs: 12, md: 12 }}>Elemento: Información adicional</Grid>
