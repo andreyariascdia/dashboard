@@ -1,17 +1,18 @@
 import { useEffect, useState } from 'react';
 import { type OpenMeteoResponse } from '../types/DashboardTypes';
 
-// Nota: He cambiado el tipo de retorno a 'OpenMeteoResponse | undefined' 
-// porque al inicio 'data' no tiene valor.
-export default function useFetchData() : OpenMeteoResponse | undefined | null { 
-    const URL = 'https://api.open-meteo.com/v1/forecast?latitude=-2.1962&longitude=-79.8862&current=temperature_2m,relative_humidity_2m,apparent_temperature,wind_speed_10m&timezone=auto';
-
-    const [data, setData] = useState<OpenMeteoResponse | null>();
+export default function useFetchData(url: string) { 
+    
+    const [data, setData] = useState<OpenMeteoResponse | null>(null);
+    const [loading, setLoading] = useState<boolean>(true);
+    const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
         const fetchData = async () => {
+            
+            setLoading(true);
             try {
-                const response = await fetch(URL);
+                const response = await fetch(url);
                 
                 if (!response.ok) {
                     throw new Error(`Error HTTP: ${response.status}`);
@@ -20,15 +21,23 @@ export default function useFetchData() : OpenMeteoResponse | undefined | null {
                 const result: OpenMeteoResponse = await response.json();
 
                 setData(result);
-            } catch (error) {
-                console.error("Error al obtener los datos del clima:", error);
+                setError(null); 
+            } catch (err) {
+                console.error("Error al obtener los datos:", err);
+                setError(err instanceof Error ? err.message : "Error desconocido");
+                setData(null);
+            } finally {
+     
+                setLoading(false);
             }
         };
 
-        
         fetchData();
 
-    },[]); 
+        
 
-    return data;
+    }, [url]);
+
+  
+    return { data, loading, error };
 }
